@@ -17,4 +17,5 @@ router.get('/token/:token', userController.getUserByToken)
 router.post('/compare-password', userController.comparePassword)
 router.post('/new-password/:id', userController.resetPassword)
 router.delete('/remove-token/:id', userController.removeToken)
+router.post('/refresh-token', userController.refreshToken)
 module.exports = router;
