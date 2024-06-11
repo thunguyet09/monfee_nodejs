@@ -78,7 +78,7 @@ class userController {
         expiresIn: "3d",
       });
       const access_token = jwt.sign({ _id: user._id }, "nguyet", {
-        expiresIn: "1m",
+        expiresIn: "5m",
       });
       user.jwt = access_token;
       res.cookie("_jwt", access_token, {
@@ -285,9 +285,7 @@ class userController {
       if (user) {
         user.password = hashedPassword;
         const updated = await user.save();
-        return res
-          .status(200)
-          .json({ message: "Password is changed successfuly" });
+        return res.status(200).json({ message: "Password is changed successfuly" });
       } else {
         return res.status(404).json({ message: "User not found" });
       }
@@ -330,7 +328,8 @@ class userController {
       const decoded = jwt.verify(token, 'nguyet');
 
       if(decoded){
-        const newAccessToken = jwt.sign({ _id: decoded._id }, "nguyet", { expiresIn: "1m" });
+        console.log(decoded)
+        const newAccessToken = jwt.sign({ _id: decoded._id }, "nguyet", { expiresIn: "5m" });
         res.status(200).json(newAccessToken);
       }
     } catch (error) {
