@@ -74,7 +74,7 @@ class userController {
           message: "Incorrect password",
         });
       }
-      const refreshToken = jwt.sign({ _id: user._id, email: user.email}, "nguyet", {
+      const refreshToken = jwt.sign({ _id: user._id, email: user.email }, "nguyet", {
         expiresIn: "3d",
       });
       const access_token = jwt.sign({ _id: user._id }, "nguyet", {
@@ -327,7 +327,7 @@ class userController {
       const token = refreshToken.split(' ')[1];
       const decoded = jwt.verify(token, 'nguyet');
 
-      if(decoded){
+      if (decoded) {
         console.log(decoded)
         const newAccessToken = jwt.sign({ _id: decoded._id }, "nguyet", { expiresIn: "5m" });
         res.status(200).json(newAccessToken);
@@ -336,6 +336,37 @@ class userController {
       console.error(error);
     }
   }
+
+  async updateAccountInfo(req, res) {
+    try {
+      const id = req.params.id
+      let { full_name, gender, address, avatar } = req.body
+      let updateData = {
+        full_name: full_name,
+        gender: gender,
+        address: address,
+        avatar: avatar
+      }
+
+      const updated = await User.updateOne({ _id: id }, { $set: updateData })
+      if (updated) {
+        return res.status(200).json(updated)
+      } else {
+        return res.status(404).json({ message: 'Not Found' })
+      }
+    } catch (error) {
+      return res.status(500).json(error)
+    }
+  }
+
+  async uploadImg(req,res){
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+  
+    res.json({ message: 'File uploaded successfully' });
+  }
+
 }
 
 module.exports = new userController();
