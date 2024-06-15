@@ -2,9 +2,28 @@ const Order = require('../models/Order')
 class orderController {
     async getOrders(req,res){
         try{
-            const orders = await Order.find({})
-            if(orders){
-                return res.status(200).json(orders)
+            const id = req.params.userId
+            const orders = await Order.find({user_id: id})
+            const page = req.params.page 
+            const limit = req.params.limit 
+            const startIndex = (parseInt(page) - 1) * parseInt(limit);
+            const endIndex = startIndex + parseInt(limit);
+            const orders_length = orders.length;
+            const totalPages = Math.ceil(orders_length / limit);
+            let ordersData = orders.slice(startIndex, endIndex);
+
+            const obj = {
+                page: page,
+                totalPages: totalPages,
+                orders: orders,
+                startIndex: startIndex,
+                endIndex: endIndex,
+                orders_length: orders_length,
+                ordersData: ordersData,
+            }
+
+            if(obj){
+                return res.status(200).json(obj)
             }else{
                 return res.status(404).json({message: "Not found"})
             }

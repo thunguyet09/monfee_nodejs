@@ -3,6 +3,6 @@ const orderController = require('../controllers/orderController');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', orderController.getOrders);
+router.get('/:userId/:page/:limit', orderController.getOrders);
 router.post('/', orderController.insertOrder)
 module.exports = router;
