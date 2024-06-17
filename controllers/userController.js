@@ -367,6 +367,22 @@ class userController {
     res.json({ message: 'File uploaded successfully' });
   }
 
+  async insertNotifications(req, res) {
+    try {
+      const id = req.params.id;
+      const user = await User.findOne({ _id: id });
+      if (user) {
+        user.notifications = req.body.notifications
+        await user.save(); 
+        res.status(200).json({ message: 'Notification added successfully' });
+      } else {
+        return res.status(404).json({ message: 'User not found' });
+      }
+    } catch (error) {
+      return res.status(500).json({ message: 'Error occurred', error: error.message });
+    }
+  }
+
 }
 
 module.exports = new userController();

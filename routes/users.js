@@ -41,4 +41,5 @@ router.post('/compare-password', userController.comparePassword)
 router.post('/new-password/:id', userController.resetPassword)
 router.delete('/remove-token/:id', userController.removeToken)
 router.post('/refresh-token', userController.refreshToken)
+router.put('/notifications/:id', userController.insertNotifications)
 module.exports = router;

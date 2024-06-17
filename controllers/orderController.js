@@ -1,6 +1,6 @@
 const Order = require('../models/Order')
 class orderController {
-    async getOrders(req,res){
+    async getOrdersOfUser(req,res){
         try{
             const id = req.params.userId
             const orders = await Order.find({user_id: id})
@@ -32,6 +32,18 @@ class orderController {
         }
     }
 
+    async getAllOrders(req,res){
+        try{
+            const orders = await Order.find({})
+            if(orders){
+                return res.status(200).json(orders)
+            }else{
+                return res.status(404).json({message: "Not found"})
+            }
+        }catch(error){
+            return res.status(500).json(err)
+        }
+    }
     async insertOrder(req,res) {
         let {date, da_tra, discount, note, order_id, payment_method, quantity, status, total, user_id, full_name, email, phone, address, city} = req.body
         let orders = new Order({

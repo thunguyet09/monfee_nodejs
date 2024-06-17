@@ -20,7 +20,8 @@ const User = new Schema({
     order_info: {type: Object},
     city: {type: String},
     emailed: {type: Boolean},
-    token: {type: String}
+    token: {type: String},
+    notifications: {type: Array}
 })
 
 module.exports = mongoose.model('User', User)
