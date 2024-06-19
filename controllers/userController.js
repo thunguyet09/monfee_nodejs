@@ -210,7 +210,7 @@ class userController {
     const email = req.body.email;
     let { id } = req.body;
 
-    const token = jwt.sign({ _id: id }, "nguyet", { expiresIn: "1m" });
+    const token = jwt.sign({ _id: id }, "nguyet", { expiresIn: "3m" });
     let update = {
       token: token,
     };
@@ -265,9 +265,9 @@ class userController {
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (isMatch) {
-        return res.status(200).json({ message: "Password matches!" });
+        return res.status(200).json(true);
       } else {
-        return res.status(400).json({ message: "Password does not match" });
+        return res.status(404).json(false);
       }
     } catch (err) {
       return res.status(500).json(err);
@@ -359,11 +359,11 @@ class userController {
     }
   }
 
-  async uploadImg(req,res){
+  async uploadImg(req, res) {
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded' });
     }
-  
+
     res.json({ message: 'File uploaded successfully' });
   }
 
@@ -373,7 +373,7 @@ class userController {
       const user = await User.findOne({ _id: id });
       if (user) {
         user.notifications = req.body.notifications
-        await user.save(); 
+        await user.save();
         res.status(200).json({ message: 'Notification added successfully' });
       } else {
         return res.status(404).json({ message: 'User not found' });
@@ -383,6 +383,26 @@ class userController {
     }
   }
 
+  async isTokenExpired(req, res) {
+    try {
+      const { token } = req.body;
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const expirationTime = decoded.exp;
+      const currentTime = Math.floor(Date.now() / 1000);
+      if (currentTime < expirationTime) {
+        return res.status(200).json({ isExpired: false });
+      } else {
+        return res.status(401).json({ isExpired: true, error: 'Token has expired' });
+      }
+    } catch (err) {
+      if (err.name === 'TokenExpiredError') {
+        return res.status(401).json({ isExpired: true, error: 'Token has expired' });
+      } else {
+        console.error('Error verifying token:', err);
+        return res.status(500).json({ error: 'Error verifying token' });
+      }
+    }
+  }
 }
 
 module.exports = new userController();

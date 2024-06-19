@@ -9,7 +9,7 @@ const User = new Schema({
     createdDate: {type: String},
     products_fav: {type: Array}, 
     vouchers: {type: Array},
-    total: {type: Number},
+    spending: {type: Number},
     phone: {type: Number},
     address: {type: String},
     gender: {type: String},

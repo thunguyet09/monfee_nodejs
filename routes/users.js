@@ -42,4 +42,5 @@ router.post('/new-password/:id', userController.resetPassword)
 router.delete('/remove-token/:id', userController.removeToken)
 router.post('/refresh-token', userController.refreshToken)
 router.put('/notifications/:id', userController.insertNotifications)
+router.post('/tokenExpired', userController.isTokenExpired)
 module.exports = router;
