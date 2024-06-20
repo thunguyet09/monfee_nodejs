@@ -167,11 +167,12 @@ class orderController {
             'utf8'
           );
           const template = handlebars.compile(emailTemplate);
-          const {items, total, orderId, email} = req.body
+          const {items, total, orderId, email, username} = req.body
           const html = template({
             items: items,
             total: total,
             orderNumber: orderId,
+            username: username
           });
       
           await emailController.sendEmail(

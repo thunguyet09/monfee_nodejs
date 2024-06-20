@@ -43,4 +43,5 @@ router.delete('/remove-token/:id', userController.removeToken)
 router.post('/refresh-token', userController.refreshToken)
 router.put('/notifications/:id', userController.insertNotifications)
 router.post('/tokenExpired', userController.isTokenExpired)
+router.post('/spending', userController.userSpending)
 module.exports = router;

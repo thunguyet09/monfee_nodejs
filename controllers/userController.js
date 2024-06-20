@@ -403,6 +403,26 @@ class userController {
       }
     }
   }
+
+  async userSpending(req,res){
+    try{
+      const {userId, total} = req.body 
+      const user = await User.findOne({_id: userId})
+      if(user){
+        if(user.spending > 0){
+          user.spending = user.spending + total
+        }else{
+          user.spending = total
+        }
+        await user.save()
+        return res.status(200).json(true)
+      }else{
+        return res.status(404).json({message: 'User not found'})
+      }
+    }catch(error){
+      return res.status(500).json(error)
+    }
+  }
 }
 
 module.exports = new userController();
