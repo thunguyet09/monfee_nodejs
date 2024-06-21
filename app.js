@@ -6,17 +6,19 @@ var logger = require('morgan');
 var dotenv = require('dotenv')
 var mongoose = require('mongoose')
 var morgan = require('morgan')
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var productsRouter = require('./routes/products')
-var voucherRouter = require('./routes/voucher')
-var newsRouter = require('./routes/news')
-var cartRouter = require('./routes/cart')
-var themeRouter = require('./routes/theme')
-var categoryRouter = require('./routes/categories')
-var orderRouter = require('./routes/orders')
-var orderDetailRouter = require('./routes/order_details')
-var orderStatusRouter = require('./routes/order_status')
+var indexRouter = require('./src/routes/index');
+var usersRouter = require('./src/routes/users');
+var productsRouter = require('./src/routes/products')
+var voucherRouter = require('./src/routes/voucher')
+var newsRouter = require('./src/routes/news')
+var cartRouter = require('./src/routes/cart')
+var themeRouter = require('./src/routes/theme')
+var categoryRouter = require('./src/routes/categories')
+var orderRouter = require('./src/routes/orders')
+var orderDetailRouter = require('./src/routes/order_details')
+var orderStatusRouter = require('./src/routes/order_status')
+var messageRouter = require('./src/routes/messages')
+var conversationRouter = require('./src/routes/conversations')
 var cors = require('cors')
 var app = express();
 
@@ -52,6 +54,8 @@ app.use('/categories', categoryRouter)
 app.use('/orders', orderRouter)
 app.use('/order-details', orderDetailRouter)
 app.use('/order-status', orderStatusRouter)
+app.use('/messages', messageRouter)
+app.use('/conversations', conversationRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Order Confirmation</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Catamaran&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Inter:wght@100..900&family=Jost&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Marcellus&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:wght@500&family=Playfair+Display:wght@500;600&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+    rel="stylesheet">
+  <style>
+    table {
+      border-collapse: collapse;
+      font-family: "Nunito", sans-serif;
+      width: 700px;
+      margin: 20px 0px;
+    }
+
+    th {
+      padding: 12px 20px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 15px;
+      font-family: "Nunito", sans-serif;
+    }
+
+    td {
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 14px;
+      padding: 6px 20px;
+      font-family: "Nunito", sans-serif;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    .total>td {
+      color: red;
+      font-weight: 600;
+      font-size: 16px !important;
+    }
+
+    .total > td {
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+    }
+
+    .container>h2 {
+      margin: 0;
+    }
+
+    .container {
+      margin-top: 30px;
+      font-family: "Nunito", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: rgb(226, 226, 226);
+      padding: 20px;
+    }
+
+    .epilogue {
+      width: 700px;
+    }
+
+    .epilogue > p {
+      font-size: 15px;
+    }
+
+    .order-confirmation {
+      border: 1px solid rgb(219, 219, 219);
+      padding: 10px 20px;
+      background-color: white;
+    }
+
+    .order-confirmation>p {
+      width: 700px;
+      margin: 0;
+      font-size: 15px;
+      margin: 7px 0px;
+    }
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px 10px 0px;
+    }
+
+    .order-confirmation > h4 {
+      font-weight: 500;
+      font-size: 15px;
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      margin: 7px 0px;
+    }
+
+    .order-confirmation > h4 > i {
+      color: #b8784e;
+    }
+
+    .epilogue > p > strong {
+      font-weight: 650;
+      color: rgb(71, 71, 71);
+    }
+
+    td > p {
+      margin: 0;
+      margin: 4px 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="order-confirmation">
+      <h4>Dear <i>{{username}}</i>,</h4>
+      <p>We have received your order and will be processing it shortly. The details of the order are below:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each items}}
+          <tr>
+            <td>
+              <p>{{product_name}}</p>
+              <p>{{size}}{{#if color}} / {{color}}{{/if}}</p>
+            </td>
+            <td>{{product_quantity}}</td>
+            <td>{{product_price}}</td>
+            <td>{{subtotal}}</td>
+          </tr>
+          {{/each}}
+          <tr class="total">
+            <td colspan="3">Total:</td>
+            <td>{{total}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="epilogue">
+        <p>Your order number is: <strong>{{orderNumber}}</strong></p>
+        <p>If you have any questions, please don't hesitate to contact us at <a
+            href="mailto:thnguyet03@gmail.com">thnguyet03@gmail.com</a>.</p>
+        <p>Sincerely thank you!</p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
