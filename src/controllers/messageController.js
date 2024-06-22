@@ -5,7 +5,7 @@ const User = require("../models/User")
 class messageController {
     async insertMesage(req,res){
         try{
-            const {conversationId, senderId, message, receiverId, date} = req.body 
+            const {conversationId, senderId, message, receiverId, date, img} = req.body 
             if(!conversationId){
                 const newConversation = new Conversation({
                     members: [senderId, receiverId],
@@ -16,7 +16,8 @@ class messageController {
                     conversationId: newConversation._id,
                     senderId: senderId,
                     message: message,
-                    date: date
+                    date: date,
+                    img: img
                 })
                 await newMessage.save()
                 return res.status(200).send('Message sent successfully!')
@@ -25,13 +26,22 @@ class messageController {
                 conversationId,
                 senderId,
                 message,
-                date
+                date,
+                img
             })
             await newMessage.save()
             return res.status(200).send('Message sent successfully!')
         }catch(err){
             return res.status(500).json(err)
         }
+    }
+
+    async uploadImg(req, res) {
+        if (!req.file) {
+          return res.status(400).json({ error: 'No file uploaded' });
+        }
+    
+        res.json({ message: 'File uploaded successfully' });
     }
 
     async getMessagesByConversationId(req,res){
@@ -55,7 +65,8 @@ class messageController {
                     },
 
                     message: message.message,
-                    date: message.date
+                    date: message.date,
+                    img: message.img
                 }
             }))
 
