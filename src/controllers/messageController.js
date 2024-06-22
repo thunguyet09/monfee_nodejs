@@ -5,24 +5,27 @@ const User = require("../models/User")
 class messageController {
     async insertMesage(req,res){
         try{
-            const {conversationId, senderId, message, receiverId = ''} = req.body 
+            const {conversationId, senderId, message, receiverId, date} = req.body 
             if(!conversationId){
                 const newConversation = new Conversation({
-                    members: [senderId, receiverId]
+                    members: [senderId, receiverId],
+                    date: date
                 })
                 await newConversation.save()
                 const newMessage = new Message({
                     conversationId: newConversation._id,
                     senderId: senderId,
-                    message: message
+                    message: message,
+                    date: date
                 })
-
+                await newMessage.save()
                 return res.status(200).send('Message sent successfully!')
             }
             const newMessage = new Message({
                 conversationId,
                 senderId,
-                message
+                message,
+                date
             })
             await newMessage.save()
             return res.status(200).send('Message sent successfully!')
@@ -42,18 +45,53 @@ class messageController {
                 const user = await User.findById(message.senderId)
                 return {
                     user: {
+                        id: user._id,
                         email: user.email,
                         fullName: user.full_name,
-                        active: user.active
+                        active: user.active,
+                        position: user.position == 'Consultant' ? user.position : '',
+                        role: user.role,
+                        avatar: user.avatar
                     },
 
-                    message: message.message
+                    message: message.message,
+                    date: message.date
                 }
             }))
 
             return res.status(200).json(await messageUserData)
         }catch(err){
             return res.status(500).json(err)
+        }
+    }
+
+    async automatedMessage(req, res) {
+        try {
+          const { message, receiverId, senderId, date, dateWithHours } = req.body;
+      
+          const conversation = await Conversation.findOne({ members: { $all: [senderId, receiverId] } });
+      
+          if (conversation) {
+            return res.status(200).json(false);
+          } else {
+            const newConversation = new Conversation({
+              members: [senderId, receiverId],
+              date: date
+            });
+            await newConversation.save();
+      
+            const newMessage = new Message({
+              conversationId: newConversation._id,
+              senderId: senderId,
+              message: message,
+              date: dateWithHours
+            });
+            await newMessage.save();
+      
+            return res.status(200).json(true)
+          }
+        } catch (error) {
+          return res.status(500).json(error);
         }
     }
 }

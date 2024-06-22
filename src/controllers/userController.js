@@ -32,6 +32,19 @@ class userController {
     }
   }
 
+  async getConsultant(req,res){
+    try {
+      const user = await User.findOne({ position: 'Consultant' });
+      if (user) {
+        return res.status(200).json(user);
+      } else {
+        return res.status(404).json({ message: "Not found" });
+      }
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  }
+
   async handleRegister(req, res) {
     try {
       const salt = await bcrypt.genSalt(10);
@@ -416,6 +429,22 @@ class userController {
         }else{
           user.spending = total
         }
+        await user.save()
+        return res.status(200).json(true)
+      }else{
+        return res.status(404).json({message: 'User not found'})
+      }
+    }catch(error){
+      return res.status(500).json(error)
+    }
+  }
+
+  async handleLogout(req,res){
+    try{
+      const userId = req.params.id 
+      const user = await User.findOne({_id: userId})
+      if(user){
+        user.active = 0
         await user.save()
         return res.status(200).json(true)
       }else{

@@ -22,7 +22,8 @@ const User = new Schema({
     emailed: {type: Boolean},
     token: {type: String},
     notifications: {type: Array},
-    active: {type: Number}
+    active: {type: Number},
+    position: {type: String}
 })
 
 module.exports = mongoose.model('User', User)
