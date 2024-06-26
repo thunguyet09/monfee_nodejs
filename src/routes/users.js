@@ -22,7 +22,7 @@ function checkFileUpLoad(req, file, cb) {
 let upload = multer({ storage: storage, fileFilter: checkFileUpLoad });
 
 app.use(express.static('public'))
-/* GET users listing. */
+
 router.post('/register', userController.handleRegister)
 router.get('/register', userController.getUsers)
 router.post('/login', userController.handleLogin)

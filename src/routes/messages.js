@@ -23,7 +23,6 @@ let upload = multer({ storage: storage, fileFilter: checkFileUpLoad });
 
 app.use(express.static('public'))
 
-/* GET home page. */
 router.get('/:conversationId', messageController.getMessagesByConversationId);
 router.post('/', messageController.insertMesage)
 router.post('/automated', messageController.automatedMessage)

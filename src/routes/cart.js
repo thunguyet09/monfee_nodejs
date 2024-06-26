@@ -16,7 +16,7 @@ function authenticate(req,res,next) {
                 }
             })
         }else{
-            res.status(403).json({message: 'Không có quyền truy cập'})
+            res.status(403).json({message: 'No access'})
         }
     }catch(err){
         return res.status(401).json({
