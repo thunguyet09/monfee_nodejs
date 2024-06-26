@@ -28,4 +28,5 @@ router.get('/:conversationId', messageController.getMessagesByConversationId);
 router.post('/', messageController.insertMesage)
 router.post('/automated', messageController.automatedMessage)
 router.post('/uploadImg', upload.single('img'), messageController.uploadImg)
+router.delete('/:conversationId', messageController.deleteMessage)
 module.exports = router;

@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 const Theme = new Schema({
     id: {type: Number},
     name: {type: String},
+    darkMode: {type: Boolean},
     text_color: {type: String},
     bg_color: {type: String}
 })

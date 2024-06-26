@@ -45,4 +45,5 @@ router.put('/notifications/:id', userController.insertNotifications)
 router.post('/tokenExpired', userController.isTokenExpired)
 router.post('/spending', userController.userSpending)
 router.get('/logout/:id', userController.handleLogout)
+router.post('/search', userController.handleUserSearch)
 module.exports = router;

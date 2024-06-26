@@ -234,7 +234,7 @@ class userController {
       from: "thnguyet03@gmail.com",
       to: email,
       subject: "Liên kết đổi mật khẩu",
-      text: `Hãy nhấp vào liên kết sau đây: http://localhost:4200/reset-password?token=${token}`,
+      text: `Hãy nhấp vào liên kết sau đây: http://localhost:8080/reset-password?token=${token}`,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -452,6 +452,21 @@ class userController {
       }
     }catch(error){
       return res.status(500).json(error)
+    }
+  }
+
+  async handleUserSearch(req, res) {
+    try {
+      const { searchVal } = req.body;
+      const users = await User.find({})
+      const filterUsers = [...users].filter((item) => item.full_name.toLowerCase().includes(searchVal.toLowerCase()))
+      if (filterUsers) {
+        return res.status(200).json(filterUsers);
+      } else {
+        return res.status(404).json({ message: 'User not found' });
+      }
+    } catch (error) {
+      return res.status(500).json(error);
     }
   }
 }

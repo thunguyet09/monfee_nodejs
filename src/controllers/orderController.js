@@ -163,7 +163,7 @@ class orderController {
       async triggerEmail(req, res) {
         try {
           const emailTemplate = fs.readFileSync(
-            path.join('D:', 'monfee', 'monfee-be-nodejs', 'views', 'email-template.html'),
+            path.join('D:', 'monfee', 'monfee-be-nodejs', 'src', 'views', 'email-template.html'),
             'utf8'
           );
           const template = handlebars.compile(emailTemplate);

@@ -3,9 +3,10 @@ const Conversation = require("../models/Conversation")
 class conversationController {
     async createdConversation(req, res) {
         try {
-            const { senderId, receiverId } = req.body
+            const { senderId, receiverId, date } = req.body
             const newConversation = new Conversation({
-                members: [senderId, receiverId]
+                members: [senderId, receiverId],
+                date: date
             })
             await newConversation.save()
             return res.status(200).json('Conversation created successfully!')
@@ -44,6 +45,16 @@ class conversationController {
                 return res.status(404).json({message: 'Conversation not found'})
             }
         } catch (error) {
+            return res.status(500).json(error)
+        }
+    }
+
+    async deleteConversation(req,res){
+        try{
+            const conversationId = req.params.id 
+            await Conversation.deleteOne({ _id: conversationId });
+            return res.status(204).send();
+        }catch (error) {
             return res.status(500).json(error)
         }
     }

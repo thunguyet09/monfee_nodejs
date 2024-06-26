@@ -105,6 +105,16 @@ class messageController {
           return res.status(500).json(error);
         }
     }
+
+    async deleteMessage(req,res){
+        try{
+            const id = req.params.conversationId 
+            await Message.deleteMany({conversationId: id})
+            return res.status(204).send()
+        }catch (error) {
+          return res.status(500).json(error);
+        }
+    }
 }
 
 module.exports = new messageController
